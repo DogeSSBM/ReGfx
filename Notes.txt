@@ -1,0 +1,5 @@
+// simple string substitution
+"abc"->"def"
+
+// $ denotes the beginning of a format string
+// $_ matches everything

@@ -32,13 +32,13 @@ typedef struct Term_s{
         Operator opr;
         struct TermList_s *list;
     };
+    struct Term_s *next;
 }Term;
 
 typedef struct TermList_s{
     Term *term;
     struct TermList_s *next;
 }TermList;
-
 
 typedef struct RuleList_s{
     TermList *l;
@@ -67,33 +67,51 @@ typedef struct SubStr_s{
 
 typedef struct ParseFeed_s{
     char *pos;
-    uint len;
+    char *start;
     TermList *terms;
 }ParseFeed;
 
+TermList* pushTerm(Term *list, Term *term)
+{
+    term->next = list;
+    return term;
+}
+
 ParseFeed parseStr(ParseFeed feed)
 {
+    char *strEnd;
+    if((strEnd = strstr(++feed.pos, "\"")) == NULL){
+        printf("Error char %u. Expected closing \"\n", pos-start);
+        exit(-1);
+    }
 
+    Term *term = calloc(1, sizeof(Term));
+
+    return feed;
 }
 
 ParseFeed parseFmt(ParseFeed feed)
 {
 
+    return feed;
 }
 
 ParseFeed parseNum(ParseFeed feed)
 {
 
+    return feed;
 }
 
 ParseFeed parseOpr(ParseFeed feed)
 {
 
+    return feed;
 }
 
 ParseFeed parseLst(ParseFeed feed)
 {
 
+    return feed;
 }
 
 ParseFeed parse(ParseFeed feed)
@@ -107,8 +125,13 @@ ParseFeed parse(ParseFeed feed)
             break;
         case '0'...'9':
             return parseNum(feed);
+            break;
+        default:
+            printf("Unknown char: '%c'\n", *feed.pos);
+            exit(-1);
+            break;
     };
-    pos.
+    return feed;
 }
 
 int main(int argc, char const *argv[])
